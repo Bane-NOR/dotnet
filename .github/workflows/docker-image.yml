@@ -13,7 +13,7 @@ env:
 
 jobs:
 
-  build:
+  build-sdk-8:
     runs-on: ubuntu-latest
 
     steps:
@@ -26,4 +26,49 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
     - name: Build and Push
-      run: docker buildx build -t "$REGISTRY/$IMAGE_NAME:latest" --push  -f Dockerfile .
+      run: docker buildx build -t "$REGISTRY/$IMAGE_NAME:sdk-8" --push  -f Dockerfile-sdk8 .
+
+  build-sdk-7:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Registry Login
+      uses: docker/login-action@v3
+      with:
+        registry: ${{ env.REGISTRY }}
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    - name: Build and Push
+      run: docker buildx build -t "$REGISTRY/$IMAGE_NAME:sdk-7" --push  -f Dockerfile-sdk7 .
+
+  build-asp-8:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Registry Login
+      uses: docker/login-action@v3
+      with:
+        registry: ${{ env.REGISTRY }}
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    - name: Build and Push
+      run: docker buildx build -t "$REGISTRY/$IMAGE_NAME:asp-8" --push  -f Dockerfile-asp8 .
+
+  build-asp-7:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Registry Login
+      uses: docker/login-action@v3
+      with:
+        registry: ${{ env.REGISTRY }}
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    - name: Build and Push
+      run: docker buildx build -t "$REGISTRY/$IMAGE_NAME:asp-7" --push  -f Dockerfile-asp7 .
