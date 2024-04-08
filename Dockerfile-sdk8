@@ -1,5 +1,6 @@
 FROM ghcr.io/bn-apps/base:latest
 
+RUN apk add libgcc libssl3 libstdc++ zlib ca-certificates-bundle
 RUN wget https://dot.net/v1/dotnet-install.sh -O dotnet-install.sh && \
     chmod +x ./dotnet-install.sh && \
     ./dotnet-install.sh --channel 8.0
