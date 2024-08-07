@@ -49,6 +49,5 @@ jobs:
     - name: Convert IMAGE_NAME to lowercase
       id: lowercase-asp8
       run: echo "IMAGE_NAME=$(echo ${{ env.IMAGE_NAME }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
-
     - name: Build and Push
       run: docker buildx build -t "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:asp-8" --push -f Dockerfile-asp8 .
