@@ -1,10 +1,8 @@
-name: Container Build
+name: Build Validation
 
 on:
-  push:
-    branches: ["main"]
-  schedule:
-    - cron: '0 2 * * *'
+    pull_request:
+      types: [opened,synchronize, edited]
 
 permissions: write-all
 env:
@@ -15,9 +13,9 @@ jobs:
   build:
     strategy:
       matrix:
-        version: [7,8]
+        version: [7,8,9]
         build: [sdk,asp]
-          
+        
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
@@ -34,6 +32,7 @@ jobs:
       run: echo "IMAGE_NAME=$(echo ${{ env.IMAGE_NAME }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
 
     - name: Build and Push
-      run: docker buildx build --platform linux/amd64 -t "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ matrix.build }}-${{ matrix.version }}" --push -f Dockerfile-${{ matrix.build }}${{ matrix.version }} .
-
-
+      run: docker buildx build --platform linux/amd64 -t "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ matrix.build }}-${{ matrix.version }}" -f Dockerfile-${{ matrix.build }}${{ matrix.version }} .
+  
+  
+  
