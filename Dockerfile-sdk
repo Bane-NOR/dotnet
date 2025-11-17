@@ -1,4 +1,4 @@
-FROM ghcr.io/bane-nor/base:
+FROM ghcr.io/bane-nor/base:latest
   
 ARG DOTNET_VERSION
 ENV DOTNET_VERSION=$DOTNET_VERSION
