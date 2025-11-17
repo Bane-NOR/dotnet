@@ -15,7 +15,7 @@ jobs:
   build:
     strategy:
       matrix:
-        version: [8.0,9.0,10.0]
+        version: [8,9,10]
         build: [sdk,asp]
           
     runs-on: ubuntu-latest
@@ -43,4 +43,4 @@ jobs:
         esac
 
     - name: Build and Push
-      run: docker buildx build --build-arg DOTNET_VERSION=${{ matrix.version }} --platform linux/amd64 -t "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ matrix.build }}-${{ matrix.version }}" -f Dockerfile-${{ matrix.build }} .
+      run: docker buildx build --build-arg DOTNET_VERSION=${{ matrix.version }}.0 --platform linux/amd64 -t "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ matrix.build }}-${{ matrix.version }}" -f Dockerfile-${{ matrix.build }} .
