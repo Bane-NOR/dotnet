@@ -33,14 +33,5 @@ jobs:
       id: lowercase-sdk8
       run: echo "IMAGE_NAME=$(echo ${{ env.IMAGE_NAME }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
 
-    - name: Map version to tag
-      id: map
-      run: |
-        case "${{ matrix.version }}" in
-          "8") echo "tag=8" >> $GITHUB_OUTPUT ;;
-          "9") echo "tag=9" >> $GITHUB_OUTPUT ;;
-          "10") echo "tag=10" >> $GITHUB_OUTPUT ;;
-        esac
-
     - name: Build and Push
       run: docker buildx build --build-arg DOTNET_VERSION=${{ matrix.version }}.0 --platform linux/amd64 -t "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ matrix.build }}-${{ matrix.version }}" -f Dockerfile-${{ matrix.build }} .
