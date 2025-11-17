@@ -45,4 +45,3 @@ jobs:
     - name: Build and Push
       run: docker buildx build --build-arg DOTNET_VERSION=${{ matrix.version }} --platform linux/amd64 -t "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ matrix.build }}-${{ matrix.version }}" -f Dockerfile-${{ matrix.build }} .
 
-
