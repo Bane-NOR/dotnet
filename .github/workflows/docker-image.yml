@@ -15,13 +15,13 @@ jobs:
   build:
     strategy:
       matrix:
-        version: [8,9]
+        version: [8,9,10]
         build: [sdk,asp]
           
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v5
     - name: Registry Login
       uses: docker/login-action@v3
       with:
@@ -34,6 +34,4 @@ jobs:
       run: echo "IMAGE_NAME=$(echo ${{ env.IMAGE_NAME }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
 
     - name: Build and Push
-      run: docker buildx build --platform linux/amd64 -t "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ matrix.build }}-${{ matrix.version }}" --push -f Dockerfile-${{ matrix.build }}${{ matrix.version }} .
-
-
+      run: docker buildx build --build-arg DOTNET_VERSION=${{ matrix.version }}.0 --platform linux/amd64 -t "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ matrix.build }}-${{ matrix.version }}" --push -f Dockerfile-${{ matrix.build }} .
